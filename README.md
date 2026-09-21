@@ -1,9 +1,25 @@
-# ARSCLib
+# ARSCLib Android
 ## Android binary resources read/write java library
-This library is developed based on AOSP structure of androidfw/ResourceTypes.h , to totally replace aapt/aapt2
+
+> [!NOTE]
+> This is a fork of [REAndroid/ARSCLib](https://github.com/REAndroid/ARSCLib) repackaged as an 
+> Android library, for use inside Android apps. It is **not** a drop-in replacement for the upstream 
+> jar on desktop JVMs. Differences from upstream:
+>
+> * Built with the Android Gradle Plugin as a `com.android.library` module with `minSdk 24`.
+> * The bundled `org.xmlpull.v1.*`, `android.util.AttributeSet` and
+>   `android.content.res.XmlResourceParser` stubs were removed as the Android runtime provides them.
+> * The bundled framework APKs were removed. `AndroidFrameworks` now loads the running device's own 
+>   `/system/framework/framework-res.apk` so the only framework available is the device's API level.
+> * Some JDK calls above API 24 were swapped for platform equivalents; every such edit is marked 
+>   with an `// Android-changed:` comment in the source.
+
+This library is developed based on AOSP structure of androidfw/ResourceTypes.h to completelly replace aapt/aapt2
+
 #### Read, write, modify and create
 * Resource table (resources.arsc)
 * Binary xml files (AndroidManifest.xml & resource xml)
+
 #### Convert from/to json string (for obfuscated resources)
 
 * Decodes resources to readable json
@@ -29,33 +45,35 @@ then you have to know such values are acceptable by android devices._
 _Check this tool developed using this library_
 [https://github.com/REAndroid/APKEditor](https://github.com/REAndroid/APKEditor)
 
-#### Works on all java supported platforms (Android, Linux, Mac, Windows)
+#### Using in an Android app
 
-
-* Maven
- ```gradle
-repositories {
-    mavenCentral()
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        maven("https://jitpack.io") { content { includeGroup("com.github.illogical-robot") } }
+    }
 }
+
+// app/build.gradle.kts
 dependencies {
-    implementation("io.github.reandroid:ARSCLib:+")
+    implementation("com.github.illogical-robot:ARSCLib:<tag-or-commit>")
 }
 ```
-* Jar
 
-```gradle
-dependencies {
-    implementation(files("$rootProject.projectDir/libs/ARSCLib.jar"))
-}
-```
-#### Build jar
+No ProGuard/R8 rules are required.
+
+#### Build AAR
 
 ```ShellSession
-git clone https://github.com/REAndroid/ARSCLib.git
+git clone https://github.com/illogical-robot/ARSCLib.git
 cd ARSCLib
-./gradlew jar
-# Built jar will be placed ./build/libs/ARSCLib-x.x.x.jar
+./gradlew assembleRelease
+# Built AAR will be placed ./build/outputs/aar/ARSCLib-release.aar
+# or: ./gradlew publishToMavenLocal  ->  com.reandroid:ARSCLib:x.x.x
 ```
+
+Requires JDK 17+ and an Android SDK (`ANDROID_HOME` or `local.properties`).
 
 #### Examples
 <details><summary> <code><b>Java example</b></code></summary>
