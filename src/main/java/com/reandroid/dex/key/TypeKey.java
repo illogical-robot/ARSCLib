@@ -598,7 +598,9 @@ public class TypeKey implements TypeDescriptorKey, ProgramKey {
         if (type instanceof Class<?>) {
             return convert((Class<?>) type);
         }
-        String name = dropSourceSignatures(type.getTypeName());
+        // Android-changed: Type.getTypeName() requires API 28.
+        // String name = dropSourceSignatures(type.getTypeName());
+        String name = dropSourceSignatures(type.toString());
         if (name.charAt(0) == '[') {
             return create(name.replace('.', '/'));
         }

@@ -7,7 +7,9 @@ package com.reandroid.json;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+// Android-changed: java.util.Base64 requires API 26.
+// import java.util.Base64;
+import android.util.Base64;
 
 public class JsonUtil {
 
@@ -17,7 +19,9 @@ public class JsonUtil {
         }
         text = text.substring(JSONItem.MIME_BIN_BASE64.length());
         try{
-            return Base64.getUrlDecoder().decode(text);
+            // Android-changed: java.util.Base64 requires API 26.
+            // return Base64.getUrlDecoder().decode(text);
+            return Base64.decode(text, Base64.URL_SAFE | Base64.NO_WRAP);
         }catch (Throwable throwable){
             throw new JSONException(throwable);
         }

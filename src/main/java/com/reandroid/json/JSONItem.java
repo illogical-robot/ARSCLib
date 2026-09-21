@@ -19,7 +19,9 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
+// Android-changed: java.util.Base64 requires API 26.
+// import java.util.Base64;
+import android.util.Base64;
 import java.util.Collection;
 import java.util.Map;
 
@@ -252,8 +254,10 @@ public abstract class JSONItem {
         writer.write("\"");
         writer.write(MIME_BIN_BASE64);
         try{
-            Base64.Encoder encoder = Base64.getUrlEncoder();
-            String base64 = encoder.encodeToString(bytes);
+            // Android-changed: java.util.Base64 requires API 26.
+            // Base64.Encoder encoder = Base64.getUrlEncoder();
+            // String base64 = encoder.encodeToString(bytes);
+            String base64 = Base64.encodeToString(bytes, Base64.URL_SAFE | Base64.NO_WRAP);
             writer.write(base64);
         }catch (IOException exception){
             throw exception;
