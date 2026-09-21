@@ -25,6 +25,13 @@ android {
             withSourcesJar()
         }
     }
+
+    testOptions {
+        unitTests.all {
+            systemProperty 'arsclib.test.framework', androidComponents.sdkComponents.bootClasspath.get()[0].asFile.absolutePath
+            systemProperty 'arsclib.test.framework.version', android.compileSdk
+        }
+    }
 }
 
 dependencies {

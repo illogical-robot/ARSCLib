@@ -42,6 +42,10 @@ import java.util.zip.ZipEntry;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApkModuleTest {
 
+    static {
+        TestFrameworks.install();
+    }
+
     public static final boolean TEST_WITH_MULTI_LAYOUT_DEX_V041 = true;
 
     private static ApkModule last_apkModule;

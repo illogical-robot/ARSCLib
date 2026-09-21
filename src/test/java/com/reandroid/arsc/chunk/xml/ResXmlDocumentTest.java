@@ -1,6 +1,7 @@
 package com.reandroid.arsc.chunk.xml;
 
 import com.reandroid.apk.AndroidFrameworks;
+import com.reandroid.apk.TestFrameworks;
 import com.reandroid.apk.ApkModule;
 import com.reandroid.arsc.chunk.TableBlock;
 import com.reandroid.arsc.model.ResourceLibrary;
@@ -15,6 +16,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 
 public class ResXmlDocumentTest {
+
+    static {
+        TestFrameworks.install();
+    }
+
     @Test
     public void testXmlNodes(){
         ResXmlDocument document = new ResXmlDocument();

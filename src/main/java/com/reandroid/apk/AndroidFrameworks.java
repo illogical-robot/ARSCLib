@@ -16,7 +16,9 @@
 package com.reandroid.apk;
 
 import com.reandroid.apk.framework.FrameworkManager;
-import com.reandroid.apk.framework.InternalFrameworks;
+// Android-changed: bundled framework APKs are replaced by the device's own framework-res.apk.
+// import com.reandroid.apk.framework.InternalFrameworks;
+import com.reandroid.apk.framework.DeviceFrameworks;
 
 public class AndroidFrameworks {
 
@@ -49,7 +51,9 @@ public class AndroidFrameworks {
         synchronized (AndroidFrameworks.class){
             FrameworkManager manager = AndroidFrameworks.frameworkManager;
             if(manager == null){
-                manager = InternalFrameworks.INSTANCE;
+                // Android-changed: bundled framework APKs are replaced by the device's own framework-res.apk.
+                // manager = InternalFrameworks.INSTANCE;
+                manager = DeviceFrameworks.INSTANCE;
                 AndroidFrameworks.frameworkManager = manager;
             }
             return manager;
